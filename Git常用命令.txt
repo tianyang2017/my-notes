@@ -1,0 +1,237 @@
+git官网
+http://git-scm.com/dowmload
+git config --global user,emaill "tianyang_shenshi@126.com"
+git config --global user.name "tianyang"
+创建版本库 git init
+将修改注册到版本库 git add foo.txt bar.txt
+git commit --message "tijiao"
+检查状态 git status
+git rm
+克隆版本库
+git clone /projects/first-steps /projects/first-steps-clone
+假设我们修改了first-steps/foo.txt
+操作
+cd /projects/first-steps
+git add foo.txt
+git commit --message "ssss"
+然后我们在克隆版本库做一次修改
+ cd /projects/first-steps-clone
+ git add bar.html
+ git commit --message ""
+接下来使用pull命令将原版本的提交同步给克隆库
+cd /projects/first-steps-clone
+git pull
+git pull 只在克隆库有作用
+要将克隆库的修改pull到原始库中需要
+1)cd /proejects/first-steps 
+2) git pull  /proejects/first-steps-clone master
+git clone --bare /projects/first-steps /projects/frist-steps-bare.git 创建共享库
+加入修改了原始版本库，现在向共享库同步提交修改
+1)cd /proejects/first-steps 
+2) git push /projects/first-steps-bare.git master
+克隆库取到共享库的相应修改
+1)cd /proejects/first-steps-clone 
+2) git pull /projects/first-steps-bare.git master
+git diff 77d231f HEAD
+git diff 77d231f^! 比较当前提交和上一次提交
+git diff 77d231f 05bcfd1 -book/bisection/  限制文件范围
+git diff --stat 77d231f 05bcfd1 显示修改的数量
+git log -n 3 显示最后三次提交
+git log --format=fuller 显示更多细节
+git log --oneline 显示概述
+--stat 哪些文件
+--dirstat 哪些文件夹
+--shortstat 多少文件和文件夹被修改
+--graph 显示提交关系
+git log --pretty=oneline
+git log --oneline/-format
+git log -stat 
+add命令将修改的文件纳入一个缓存区也叫暂存区
+将blah.txt移出缓存区
+git reset HEAD blah.txt
+比较当前版本库中HEAD提交和暂存区的不同
+git diff --staged
+比较工作区和缓存区的不同
+git diff 
+使用stash命令将工作区和暂存区的修改保存到一个储藏栈
+git stash
+查看储藏栈
+git stash list
+恢复之前的储藏
+git stash pop stash@{1}
+git存文件的方式
+git hash-object -w hello.txt
+日后访问通过存文件时返回的40位字符
+git cat-file -p 28cf6740e
+查看分支命令 带*的为活跃分支 git branch
+切换到指定分支 git checkout a-branch
+创建分支 git branch a-branch
+为任意一批提交创建分支 git branch still-a-branch ss@##4tt6
+从现有分支创建新分支 git branch new-branch   old-branch
+强制切换分支  git checkout --force a-branch 
+但是会丢失修改 可以使用 git stash 储藏起来  以后使用 git stash pop 恢复之前的储藏
+删除分支 git branch -d a-branch 
+强制删除分支  git branch -D a-branch
+查找删除的分支的提交散列值 git reflog
+净化版本 删除不属于当前分支的提交 使用gc命令
+合并分支 git merge a-branch
+当出现冲突可以使用  git checkout --ours 或者 git checkout --theirs
+合并时强制产生一次提交 不使用快速提交 git merge --no-ff a-branch
+查看合并之前的父级提交 git log --merges
+给版本库起名字 git remote add myclone file:///tmp/git-book-clone.git
+git remote rm myclone 删除名字
+git remote --verbose 显示用于获取或推送提交的路径
+查看远程跟踪分支 git branch -r 
+从远程分支中分岔出一个本地分支
+git checkout -b feature-b clone/feature-b
+git fetch clone feature-b:my-feature-b
+将feature-a下新的提交传送给clone所指向的远程版本库
+git push clone feature-a
+删除远程版本库的分支
+git push clone :feature-a
+pull=fetch+merge
+讨厌钻石链的 使用 git pull --rebase
+嵌入一个子模块
+git submodules add /global-path-to/sub sub
+git submodules init
+cd sub
+git checkout v1.0
+cd ..
+git add .gitmodoules
+git add sub
+克隆一个带子模块的项目
+git submodules init
+git submodules update
+使用子模块的新版本
+cd sub
+git fetch
+git checkout v2.0
+cd ..
+git add sub
+git commit -m "new version of the submoudule"
+
+嵌入一个子树
+git subtree add --prefix=sub /global-path-to/sub v2.0
+--squash 限制只获取特定的提交内容
+git subtree add --squash -prefix=sub /global-path-to/sub master
+更新一个已嵌入的子树
+git subtree pull --prefix=sub /glob-path-to/sub v2.1
+--squash 可以跳过模块版本库的历史记录
+git subtree pull --squash --prefix=sub /glob-path-to/sub master
+将模块目录中所发生的修改从其他修改中分离出来
+git subtree split --rejoin --prefix sub --branch sub/master
+合并模块版本库的修改，模块版本库中的本地修改必须跟远端的修改进行合并
+git checkout sub/master
+git fetch /global-path-to/sub master
+git merge FETCH_HEAD
+将修改传送到模块版本库中，并删除临时分支
+git push /global-path-to/sub HEAD:master
+git checkout master
+git branch -d sub/master
+
+git tag 1.2.3.4 master -m "sssss" 创建标签
+git show-ref --dereference --tags
+git log --oneline --decorate 在日记中显示标签
+git  tag -1 显示所有标签
+git reset  --hard HEAD^回退到上个版本
+git reset  --hard HEAD^^回退到上上个版本
+git reset  --hard HEAD~100回退到上100个版本
+查看一个分支的本地历史
+git log --walk-reflogs mybrach
+
+ 忽略一些已被版本化的文件
+ git update-index --assume-unchanged foo.txt
+ 停止忽略
+ git update-index --no-assume-unchanged foo.txt
+或者重置一下所有的文状态
+git update-index --really-refresh
+给GIT命令取别名
+git config --global alias.ci commit
+git config --global alias.st status
+接下来就可以使用
+git ci
+git st
+将提交移到另一分支
+git rebase --interactive
+pick 6a2f459 should stay in A 1
+pick 05c2 should stay in A 2
+exec git branch -f tmp/SPLIT
+pick adsffaa should go to B 1
+pick fafa should go to B 2
+git checkout -B tmp/MOVE A
+git rebase tmp/SPLIT --onto B
+git checkout B
+git merge --ff tmp/MOVE
+git branch --force A tmp/SPLIT
+
+GIT支持的几种不同的协议
+file 经由共享网络设备访问
+git 专用服务器的网络通信
+http 经由web服务器访问
+ssh 经由安全架构壳访问
+对项目进行git版本化时需要对空目录进行处理
+cd projecta/EmptyDir
+touch .gitignore 或者 touch .gitkeep
+设置行尾结束符
+git config --global core.autocrlf true
+使用git deamon
+git deamon --base-path=/shared/gitrepos
+访问url git://projeata.git
+配置写权限
+git deamon --base-path=/shared/gitrepos --enable=receive-pack
+
+使用--set-upstream 将本地分支和远程版本库的分支连接起来
+origin指定远程版本库的名称
+git --set-upstream origin feature-a
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+-
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

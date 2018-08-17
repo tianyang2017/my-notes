@@ -1,0 +1,6 @@
+启服务
+redis-server.exe redis.windows.conf 
+客户端
+redis-cli.exe -h 127.0.0.1 -p 6379
+五种数据类型
+String hash list set 有序set

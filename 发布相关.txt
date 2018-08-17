@@ -1,0 +1,51 @@
+开发环境:
+服务器信息:10.186.24.19  dcos/dcos01
+optmadmin/!QAsde32w
+10.186.27.123:30000 cimsmongo 6yhn*IK<@cims     6yhn*IK<@cmdb_org_1023
+发版替换路径
+console:/data/dcos/apps/cims/Console-W/src/www
+java-cims:/data/dcos/apps/cims/war/cimanager/WEB-INF/classes/com
+/data/dcos/apps/cims/war/downfile
+/data/dcos/apps/cims/tomcat-cimanager
+
+uat:
+服务器信息:10.186.25.11  dcos/dcos01
+/applog/dcos/cims/tmct77_cimanager_logs
+服务器信息:10.186.25.12  dcos/dcos01
+/applog/dcos/cims/tmct77_cimanager_logs
+marathon
+http://10.182.161.106:8080/ui/#/apps/%2Fcims%2Fnginxcw 
+dcosadmin/5tgbBHU*
+
+
+
+
+10.182.162.216:30000 cmdbapp #EDC4rfv@cims   #EDC4rfv@cims    #EDC4rfv@cmdb_org_1023
+db.createUser({user: "cimsroot",pwd: "$RFV6yhn",roles:[{role: "root", db: "admin" }]})
+db.createUser({user: "cmdbapp",pwd: "#EDC4rfv",roles: [{ role: "readWrite", db: "cmdb_org_1023" }]})
+db.createUser({user: "cimsapp",pwd: "#EDC4rfv",roles: [{ role: "readWrite", db: "cims" }]})
+
+log /applog/dcos/cims/tmct77_cimanager_logs
+
+core:/data/dcos/apps/cims/cimanager/WEB-INF/lib/opt-cruiser-core-1.0-SNAPSHOT.jar
+
+rm -rfv www  删除
+unzip client.zip 解压
+rz -y 上传
+mv www_bak_20170519/ www 
+ps -eaf|grep java
+docker ps -a
+docker exec -it d68d04c2a1c8 bash
+docker exec -it 6c3c4f01860b bash
+停止容器 docker kill {}
+退出容器 ctrl+P+Q
+chmod 777 *
+uname -a
+
+cmdb_org_1023
+git reset 2a47b49  opt-cruiser-permissions/src/test/java/org/opt/cruiser/MongoTest.java
+netstat -na | grep ESTAB | grep 8080 | wc -1
+netstat -na | grep ESTAB | grep 8080 | wc -l(小写的L)
+
+ 
+

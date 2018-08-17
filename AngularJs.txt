@@ -1,0 +1,10 @@
+文本框  使用ng-model指令将内部数据模型对象（$scope）中的name属性
+绑定到了文本输入字段上。这意味着无论在文本输入字段中输入了什么，都
+会同步到数据模型中
+<input ng-model="name" type="text" placehoider="your name">
+<h1>hello {{name}}</h1>
+
+只有被具有哪个ng-app属性的DOM元素包含的元素才会受AngulaJS影响。
+ng-controller声明所有被它包含的元素都属于某个控制器。
+
+angular.module('myApp',[])声明模块

@@ -1,0 +1,34 @@
+
+---以用户名为“QZ_SIT1”的用户为例---
+1、创建用户QZ_SIT1,给用户授权（---以用户名为“QZ_SIT1”的用户为例---）
+drop user  QZ_SIT1 cascade;
+create user QZ_SIT1 identified by QZ_SIT1 default tablespace NNC_DATA01 temporary tablespace temp;
+GRANT connect ,dba to QZ_SIT1;
+2、创建数据文件目录并将目录授权与之前创建的用户QZ_SIT1（---以目录“D:\db_dir”为例---）
+select * from dba_directories;
+create directory db as 'D:\db_dir';
+grant read,write on directory db to QZ_SIT1;
+3、导入数据文件
+impdp QZ_SIT1/QZ_SIT1@orcl directory=db dumpfile=20160405.dmp logfile=20160405.log  REMAP_SCHEMA=lease:QZ_SIT1
+4、创建strcat函数，执行《创建strcat函数.sql》,提交。
+5、数据库备份：
+expdp lease/lease@zyzl directory=db dumpfile=20160405.dmp logfile=20160405.log schemas=lease
+exp hist/hist@orcl file=E:/hist_20160308.dmp  owner=(hist)
+exp hist/hist@orcl file=E:/hist_20160308.dmp  owner=(hist)
+若从高版本到低版本不兼容的,只需要在源端 11.2上面加上版本号导出即可
+expdp lease/lease directory=db dumpfile=20160405.dmp full=y version=11.1.0.6.0
+强行断开连接。执行以下查询。然后将查询结果作为命令执行。
+select 'alter system kill session '''||sid||','||serial#||''';' from v$session where username = 'TX';
+
+从源数据库导出：
+exp leasenc63_uat/leasenc63_uat file=D:\dbbak\63_uat_bak\exp1.dmp tables=(yls_kpi_set,yls_kpi_item,yls_vouch_template,yls_detail_template)
+导入到目标数据库：
+drop table yls_kpi_set;
+drop table yls_kpi_item;
+imp leasebj/leasebj file=D:\dbbak\63_uat_bak\exp1.dmp tables=(yls_kpi_set,yls_kpi_item,yls_vouch_template,yls_detail_template)
+
+
+ 搜出该用户的session的SID,SERIAL码，然后kill掉
+select sid,serial# from v$session where username='大写user_name';
+alter system kill session 'sid,serial'; 
+alter system kill session '527,2832';

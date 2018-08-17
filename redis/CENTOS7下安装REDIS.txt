@@ -1,0 +1,9 @@
+mkdir -p /usr/local/services
+cd /usr/local/services
+wget http://download.redis.io/releases/redis-4.0.6.tar.gz
+ar -zxvf redis-4.0.6.tar.gz
+yum install gcc
+cd redis-4.0.6/deps/
+make  hiredis jemalloc linenoise lua
+cd ../src
+make install

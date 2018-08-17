@@ -1,0 +1,40 @@
+1.安装nodejs
+安装目录：C:\Program Files\nodejs
+检查Node.js版本 node --version
+安装npm
+cd C:\Program Files\nodejs
+git clone --recursive git://github.com/isaacs/npm.git 新版本nodejs不需要安装 升级 npm install npm -g
+安装express  npm install express -gf  安装express命令工具 npm install -g express-generator
+在C:\Users\Administrator\AppData\Roaming\npm\node_modules目录 会有express
+卸载模块 npm uninstall express
+更新模块 npm update express
+搜索模块   npm search express
+使用express创建一个工程:
+express helloworld
+npm install
+npm start
+代码编辑工具
+sublime  webstorm
+div.row>div.col-md-12*10 
+断点调试工具
+chrome插件Batarang
+版本管理工具
+git
+代码合并和混淆工具
+npm install --save-dev grunt-contrib-concat grunt-contrib-jshint grunt-contrib-sass grunt-contrib-uglify grunt-contrib-watch grunt-contrib-connect
+合并文件：grunt-contrib-concat
+语法检查：grunt-contrib-jshint
+Scss 编译：grunt-contrib-sass
+压缩文件：grunt-contrib-uglify
+监听文件变动：grunt-contrib-watch
+建立本地服务器：grunt-contrib-connect
+依赖管理工具
+bower https://bower.io/
+bower install jquery             bower install bootstrat
+
+单元测试工具
+npm install -g http-server
+karma结合jasmine（分组 用例 期望 匹配）
+集成测试工具
+
+
