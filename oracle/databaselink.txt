@@ -1,0 +1,69 @@
+-- 1.Create database link   
+create public database link SCOTT_LINK  
+connect to Chnmedicine identified by Chnmedicine
+using '192.168.200.23:1521/orcl';  
+--2.查看dblink
+select owner,object_name from dba_objects where object_type='DATABASE LINK';
+select * from dba_db_links;
+select * from dual@SCOTT_LINK; 来测试是否连接成功
+--3.删除
+drop public database link dblinkname;
+
+一、查询系统中的job，可以查询视图
+select * from dba_jobs;
+select * from all_jobs;
+select * from user_jobs;
+-- 正在运行job
+select * from dba_jobs_running;
+-- 创建job
+    declare     
+           job1 number;
+    begin
+           dbms_job.submit(job1, 'pro_job_print;',sysdate, 'sysdate+10/86400');    --每10插入一条记录
+   end;
+-- 运行job
+       begin
+               dbms_job.run(26);      --和select * from user_jobs;中的job值对应，看what对应的过程
+       end;
+-- 删除一个job
+     begin
+             dbms_job.remove(26);--和select * fromuser_jobs; 中的job值对应，看what对应的过程
+     end;    
+
+select *    from CHNM00_01_CHNMEDICINE_DIC;
+select t.column_name ||',',
+':NEW.'||t.column_name ||',' ,
+ t.column_name ||' = :NEW.'||t.column_name ||','
+ from user_col_comments t where t.table_name = 'CHNM00_01_CHNMEDICINE_DIC';
+
+-- Add/modify columns 
+alter table CHNM00_01_CHNMEDICINE_DIC add createtime DATE;
+alter table CHNM00_01_CHNMEDICINE_DIC add updatetime DATE;
+alter table CHNM00_01_CHNMEDICINE_DIC add creator VARCHAR2(20);
+alter table CHNM00_01_CHNMEDICINE_DIC add modifier VARCHAR2(20);
+alter table CHNM00_01_CHNMEDICINE_DIC add isdelete CHAR(1) default 0;
+-- Add comments to the columns 
+comment on column CHNM00_01_CHNMEDICINE_DIC.createtime
+  is '创建时间';
+comment on column CHNM00_01_CHNMEDICINE_DIC.updatetime
+  is '修改时间';
+comment on column CHNM00_01_CHNMEDICINE_DIC.creator
+  is '创建者';
+comment on column CHNM00_01_CHNMEDICINE_DIC.modifier
+  is '修改者';
+comment on column CHNM00_01_CHNMEDICINE_DIC.isdelete
+  is '是否删除：0否、1是';
+
+create public database link SCOTT_LINK  
+connect to Chnmedicine identified by Chnmedicine
+using '192.168.200.201:1521/orcl';  
+select * from dba_objects where object_type='DATABASE LINK';
+select * from dba_db_links;
+drop public database link SCOTT_LINK;
+select t.column_name, ':NEW.'||t.column_name||',',
+t.column_name||' = :NEW.'||t.column_name||',',t.comments
+ from user_col_comments t where t.table_name = 'CHNM03_01_MOBILEEND_CONFIG';
+ select a.TRIGGER_NAME from all_triggers a  where a.TRIGGER_NAME like 'WJW_%';
+ select  SEQ__PATIENT_INFO.NEXTVAL  from dual;
+ 
+ select t.table_name from user_tables t;

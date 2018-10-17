@@ -1,0 +1,70 @@
+
+更新字段名 alter table TABLE_NAME rename column column_old to column_new;
+添加字段 alter table TABLE_NAME add COLUMN_NAME varchar(10);
+删除字段 alter table TABLE_NAME drop column COLUMN_NAME;
+添加字段并附值 alter table TABLE_NAME ADD COLUMN_NAME NUMBER(1) DEFAULT 1;
+修改字段值 update TABLE_NAME set filedname=value where filedname=value;
+修改字段数据类型 alter table tablename modify filedname varchar2(20);
+--创建用户
+create user ake_irms_2011 identified by ake_irms_2011 default tablespace irms temporary tablespace temp;
+--修改改用户密码:
+alter user ake_irms_2011 identified by manager;
+--给用户赋予权限
+grant connect,resource,dba to ake_irms_2011;
+一次把权限给完(过程、包、方法):
+ grant execute any procedure to Chnmedicine;
+给其创建触发器权限:
+grant create trigger to Chnmedicine;
+dbLink权限
+grant create public  database link to Chnmedicine ;
+--重建索引
+alter index CONS_PK_KPI_SET rebuild;
+用户解锁
+1.sqlplus /nolog
+2.conn /as sysdba
+3.select u.username,u.lock_date,sysdate,to_char(round(sysdate-u.lock_date))||'天'　from dba_users u where u.account_status like '%LOCKED'
+4.alter user username account unlock;
+5.修改时间格式
+alter session set nls_date_format='yyyy-mm-dd hh24:mi:ss';
+创建表空间
+CREATE SMALLFILE TABLESPACE NNC_DATA01 DATAFILE 'E:\app\Administrator\oradata\orcl\NNC_DATA01.dbf' SIZE 2048M 
+AUTOEXTEND ON NEXT 10000K MAXSIZE UNLIMITED LOGGING EXTENT MANAGEMENT LOCAL SEGMENT SPACE MANAGEMENT AUTO ;
+
+
+查询所有表名：
+select t.table_name from user_tables t;
+查询所有字段名：
+select t.column_name from user_col_comments t;
+查询指定表的所有字段名：
+select t.column_name from user_col_comments t where t.table_name = 'BIZ_DICT_XB';
+查询指定表的所有字段名和字段说明：
+select t.column_name, t.column_name from user_col_comments t where t.table_name = 'BIZ_DICT_XB';
+查询所有表的表名和表说明：
+select t.table_name,f.comments from user_tables t inner join user_tab_comments f on t.table_name = f.table_name;
+查询模糊表名的表名和表说明：
+select t.table_name from user_tables t where t.table_name like 'BIZ_DICT%';
+select t.table_name,f.comments from user_tables t inner join user_tab_comments f on t.table_name = f.table_name where t.table_name like 'BIZ_DICT%';
+--查询表的数据条数、表名、中文表名
+select a.num_rows, a.TABLE_NAME, b.COMMENTS
+from user_tables a, user_tab_comments b
+WHERE a.TABLE_NAME = b.TABLE_NAME
+order by TABLE_NAME;
+oracle触发器的启用和停用
+1、禁用 table_name 表的所有 trigger
+alter table table_name disable all triggers;
+2、启用 table_name 表的所有 trigger
+alter table table_name enable all triggers;
+3、禁用指定 trigger
+alter trigger trigger_name disable;
+4、启用指定 trigger
+alter trigger trigger_name enable;
+下面的语句用来查询哪些对象被锁：
+select object_name,machine,s.sid,s.serial#，
+ 'alter system kill session '''||s.sid||','||s.serial#||''';'
+from v$locked_object l,dba_objects o ,v$session s
+where l.object_id　=　o.object_id and l.session_id=s.sid;
+
+ 搜出该用户的session的SID,SERIAL码，然后kill掉
+select sid,serial# from v$session where username='大写user_name';
+alter system kill session 'sid,serial'; 
+alter system kill session '527,2832';

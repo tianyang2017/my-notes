@@ -28,7 +28,3 @@ drop table yls_kpi_item;
 imp leasebj/leasebj file=D:\dbbak\63_uat_bak\exp1.dmp tables=(yls_kpi_set,yls_kpi_item,yls_vouch_template,yls_detail_template)
 
 
- 搜出该用户的session的SID,SERIAL码，然后kill掉
-select sid,serial# from v$session where username='大写user_name';
-alter system kill session 'sid,serial'; 
-alter system kill session '527,2832';
