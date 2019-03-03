@@ -1,9 +1,0 @@
-db.t_instance_reportmanager.find({},{'name':1,'scriptkey':1,'executetime':1,
-'lastexecutetime':1,'cachetime':1,'syn':1,'reportfunc':1});
-db.t_instance_reportmanager.update( {'scriptkey':{$ne:'010'}} ,
-{ $set : { 'executetime':'23:11:00','lastexecutetime':'2017-05-22 23:11:00',"syn" : null} },false,true );
-
-db.t_instance_reportmanager.update( {} , { $set : {"exetype" : null} },false,true );
-db.t_instance_reportmanager.find({})
-db.t_instance_reportmanager.find({'scriptkey':{$ne:'010'}})
-db.t_instance_reportmanager.update({},{$unset:{'syn':''}},false, true)
